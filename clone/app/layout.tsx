@@ -3,6 +3,8 @@ import Navbar from "./components/navbar/Navbar";
 import ClientOnly from "./components/ClientOnly";
 import Modal from "./components/modals/Modal";
 import './globals.css'
+import RegisterModal from "./components/modals/RegisterModal";
+import ToasterProvider from "./providers/ToasterProvider";
 
 export const metadata = {
   title: 'Catch',
@@ -22,8 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <body className = {font.className}>
         <ClientOnly>
-        <Modal actionLabel="Submit" title="Hello World" isOpen/>
-        <Navbar />
+          <ToasterProvider/>
+          <RegisterModal />
+          <Navbar />
         </ClientOnly>
         {children}
         </body>
