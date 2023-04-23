@@ -1,6 +1,5 @@
 'use client';
 
-//had to do npm i query-string this is a URL finder I think. 
 import qs from 'query-string';
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
@@ -28,12 +27,10 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
     }
 
     const updatedQuery: any = {
-      //... spreads current query
       ...currentQuery,
       category: label
     }
 
-    //if we are already on the category then we want to reset it. 
     if (params?.get('category') === label) {
       delete updatedQuery.category;
     }

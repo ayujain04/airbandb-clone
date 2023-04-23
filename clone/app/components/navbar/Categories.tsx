@@ -20,7 +20,7 @@ import { MdOutlineVilla } from 'react-icons/md';
 import CategoryBox from "../CategoryBox";
 import Container from '../Container';
 
-//defining the list of all our categories. 
+
 export const categories = [
   {
     label: 'Beach',
