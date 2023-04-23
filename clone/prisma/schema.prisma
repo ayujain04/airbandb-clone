@@ -9,19 +9,18 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
- 
-model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String?
-  email String? @unique
-  emailVerified DateTime?
-  image String?
-  hashedPassword String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  favoriteIds String[] @db.ObjectId
 
-//can chnage the models below to make catch.
+model User {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  email           String?   @unique
+  emailVerified   DateTime?
+  image           String?
+  hashedPassword  String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  favoriteIds     String[] @db.ObjectId
+
   accounts Account[]
   listings Listing[]
   reservations Reservation[]
@@ -29,52 +28,50 @@ model User {
 
 model Account {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  userID String @db.ObjectId
-  type String
-  provider String
-  providerAccountId String
-  refresh_Token String? @db.String
-  accessToken String? @db.String
-  expires_at Int?
-  token_type String?
-  scope String?
-  id_token String? @db.String
-  session_state String? 
+  userId             String   @db.ObjectId
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.String
+  access_token       String?  @db.String
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.String
+  session_state      String?
 
-  //this line keeps a relation with the user using the user ID field. 
-  user User @relation(fields: [userID], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
-model Listing{
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-    title String
-    description String
-    imageSrc String
-    createdAT DateTime @default(now())
-    category String
-    roomCount Int
-    bathroomCount Int
-    guestCount Int
-    locationValue String
-    userID String @db.ObjectId
-    price Int
+model Listing {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String
+  imageSrc String
+  createdAt DateTime @default(now())
+  category  String
+  roomCount Int
+  bathroomCount Int
+  guestCount Int
+  locationValue String
+  userId String @db.ObjectId
+  price Int
 
-    //creating a relation with the user: 
-    user User @relation(fields: [userID], references: [id], onDelete: Cascade)
-    reservation Reservation[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reservations Reservation[]
 }
 
-model Reservation{
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-    userID String @db.ObjectId
-    listingID String @db.ObjectId
-    startDate DateTime
-    endDate DateTime
-    totalPrice Int
-    createdAt DateTime @default(now())
+model Reservation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  listingId String @db.ObjectId  
+  startDate DateTime
+  endDate DateTime
+  totalPrice Int
+  createdAt DateTime @default(now())
 
-    user User @relation(fields: [userID], references: [id], onDelete: Cascade)
-    listing Listing @relation(fields: [listingID], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
 }

@@ -165,7 +165,6 @@ const Modal: React.FC<ModalProps> = ({
                     w-full
                   "
                 >
-                    {/* conditional rendering */}
                   {secondaryAction && secondaryActionLabel && (
                     <Button 
                       disabled={disabled} 
